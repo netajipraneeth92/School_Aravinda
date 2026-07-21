@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aravinda High School — Truly CBSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{--navy-deep:#0c1e33;--navy-dark:#152d4a;--navy:#1b3a5c;--navy-medium:#2a5580;--navy-light:#4a7aad;--navy-pale:#cddcef;--navy-faint:#e8f0f8;--gold:#b8941a;--gold-light:#d4b03a;--gold-dim:rgba(184,148,26,0.35);--cream:#fffef8;--cream-warm:#faf7ef;--cream-mid:#f3ebd8;--cream-darker:#e8dbc0;--text-dark:#152d4a;--text-body:#2c4a6a;--text-muted:#5a7a9a}
+        html{scroll-behavior:smooth}
+        body{font-family:'Lora',serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;color:var(--text-dark);overflow-x:hidden;background:repeating-linear-gradient(87deg,transparent,transparent 4px,rgba(255,255,255,0.005) 4px,rgba(255,255,255,0.005) 7px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.02) 60px,rgba(0,0,0,0.02) 62px),radial-gradient(ellipse at 50% 30%,#1e140c 0%,#140e08 50%,#0a0705 100%)}
+        body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 40%,transparent 30%,rgba(0,0,0,0.55) 100%);pointer-events:none;z-index:0}
+        .school-title{position:relative;z-index:1;text-align:center;padding:30px 20px 10px;animation:titleFade 1s ease-out .2s both}
+        @keyframes titleFade{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+        .school-title .ornament{color:var(--gold-dim);font-size:14px;letter-spacing:8px}
+        .school-title h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--gold-light);letter-spacing:1.5px;margin:6px 0 2px;text-shadow:0 2px 12px rgba(212,176,58,0.2)}
+        .school-title .tagline{font-family:'Playfair Display',serif;font-size:12px;color:var(--gold-dim);letter-spacing:6px;text-transform:uppercase}
+        .title-divider{width:120px;height:1px;margin:10px auto 0;background:linear-gradient(to right,transparent,var(--gold-dim),transparent)}
+        .book-scene{position:relative;z-index:1;padding:18px 20px 20px;display:flex;flex-direction:column;align-items:center;width:100%;flex:1}
+        .book-container{position:relative;display:flex;align-items:center;animation:bookAppear 1.2s ease-out .4s both}
+        @keyframes bookAppear{from{opacity:0;transform:scale(.92) translateY(24px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .book{position:relative;width:660px;height:490px;perspective:2500px;transform-style:preserve-3d;-webkit-user-select:none;user-select:none}
+        .book::after{content:'';position:absolute;bottom:-20px;left:5%;width:90%;height:30px;background:radial-gradient(ellipse,rgba(0,0,0,0.4) 0%,transparent 70%);filter:blur(10px);z-index:-1;transition:all 1s ease 1.8s}
+        .book.book-closed::after{left:-8%;width:70%;background:radial-gradient(ellipse,rgba(0,0,0,0.5) 0%,transparent 65%)}
+        .book-edge{position:absolute;right:-5px;top:3px;width:7px;height:calc(100% - 6px);background:linear-gradient(to right,#ece4d4,#ddd4c0,#e6ddcc,#d8ceba);border-radius:0 2px 2px 0;z-index:0;transition:opacity 1s ease 2s}
+        .book-edge::before,.book-edge::after{content:'';position:absolute;right:-1px;width:3px;height:100%;background:linear-gradient(to right,#d8ceba,#ccc2ac);border-radius:0 1px 1px 0}
+        .book-edge::after{right:-3px;width:2px;background:linear-gradient(to right,#ccc2ac,#c0b6a0)}
+        .book.book-closed .book-edge{opacity:0}
+        .book-spine{position:absolute;left:-8px;top:1px;width:10px;height:calc(100% - 2px);background:linear-gradient(to right,var(--navy-deep),var(--navy-dark),var(--navy-deep));border-radius:3px 0 0 3px;z-index:0;box-shadow:-2px 0 6px rgba(0,0,0,0.3)}
+        .book-spine::after{content:'';position:absolute;left:2px;top:10%;bottom:10%;width:1px;background:rgba(255,255,255,0.07)}
+        .page{position:absolute;top:0;left:0;width:100%;height:100%;transform-origin:left center;transform-style:preserve-3d;cursor:default}
+        .page.no-transition{transition:none!important}
+        .page .front,.page .back{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:0 4px 4px 0;overflow:hidden}
+        .page .front{background:var(--cream);box-shadow:inset -5px 0 12px rgba(0,0,0,0.03)}
+        .page .back{transform:rotateY(180deg);display:flex;align-items:center;justify-content:center}
+        .page.flipping{filter:drop-shadow(-10px 4px 20px rgba(0,0,0,0.18))}
+        .fold-overlay{position:absolute;inset:0;pointer-events:none;z-index:5;opacity:0;transition:opacity .05s}
+        .fold-overlay.visible{opacity:1}
+        .back-pattern{width:72%;height:72%;border:2px solid rgba(27,58,92,0.08);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:.35;gap:10px;background:linear-gradient(135deg,#f5f0e6,#ede6d8)}
+        .back-pattern i{font-size:32px;color:rgba(27,58,92,0.18)}
+        .back-pattern span{font-family:'Playfair Display',serif;font-size:15px;color:rgba(27,58,92,0.15);font-weight:600;letter-spacing:4px}
+        .page-curl{position:absolute;bottom:0;right:0;width:30px;height:30px;background:linear-gradient(225deg,var(--cream-mid) 35%,#d6c8aa 55%,#cabb9c 100%);border-radius:0 0 4px 0;cursor:pointer;transition:width .3s,height .3s;z-index:5}
+        .page-curl:hover{width:42px;height:42px}
+        .cover{background:linear-gradient(155deg,#fdfaf2 0%,#f7f0e0 35%,#f0e6ce 70%,#e8dbc0 100%)!important;display:flex;align-items:center;justify-content:center;padding:32px;border-radius:0 4px 4px 0!important}
+        .cover-inner{text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid var(--navy);padding:28px;position:relative}
+        .cover-inner::before{content:'';position:absolute;inset:8px;border:1px solid rgba(27,58,92,0.25);pointer-events:none}
+        .cover-corner{position:absolute;width:24px;height:24px;border-color:var(--navy)}
+        .cover-corner.tl{top:16px;left:16px;border-top:2px solid;border-left:2px solid}
+        .cover-corner.tr{top:16px;right:16px;border-top:2px solid;border-right:2px solid}
+        .cover-corner.bl{bottom:16px;left:16px;border-bottom:2px solid;border-left:2px solid}
+        .cover-corner.br{bottom:16px;right:16px;border-bottom:2px solid;border-right:2px solid}
+        .cover-shield{width:72px;height:72px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 4px 18px rgba(184,148,26,0.25)}
+        .cover-shield i{font-size:30px;color:var(--navy-deep)}
+        .cover h2{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:var(--navy-dark);letter-spacing:.5px;line-height:1.2;margin-bottom:4px}
+        .cover .truly-cbse{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:var(--navy-medium);letter-spacing:5px;text-transform:uppercase;margin-bottom:18px}
+        .cover-divider{width:100px;height:1px;margin:0 auto 16px;background:linear-gradient(to right,transparent,var(--navy-medium),transparent)}
+        .cover .est{font-family:'Playfair Display',serif;font-size:11px;color:var(--navy-light);letter-spacing:4px;text-transform:uppercase;margin-bottom:10px}
+        .cover .motto{font-family:'Playfair Display',serif;font-style:italic;font-size:12px;color:var(--navy-light);letter-spacing:1px;line-height:1.5;max-width:320px}
+        .cover .open-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--navy-pale);letter-spacing:1.5px;display:flex;align-items:center;gap:6px;animation:hintPulse 2.5s ease-in-out infinite}
+        @keyframes hintPulse{0%,100%{opacity:.5}50%{opacity:.9}}
+        .back-cover-design{background:linear-gradient(155deg,#fdfaf2 0%,#f7f0e0 35%,#f0e6ce 70%,#e8dbc0 100%)!important;display:flex;align-items:center;justify-content:center;padding:36px;border-radius:0 4px 4px 0!important}
+        .back-cover-design-inner{text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(27,58,92,0.2);padding:36px;position:relative}
+        .back-cover-design-inner .quote-icon{font-size:26px;color:var(--navy-pale);margin-bottom:18px}
+        .back-cover-design-inner .quote-text{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--navy-medium);line-height:1.8;max-width:360px}
+        .back-cover-design-inner .quote-author{font-family:'Playfair Display',serif;font-size:13px;color:var(--navy-light);margin-top:16px;font-style:italic}
+        .back-cover-design-inner .close-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--navy-pale);letter-spacing:1.5px;display:flex;align-items:center;gap:6px;animation:hintPulse 2.5s ease-in-out infinite}
+        .book-back-physical{background:linear-gradient(155deg,#f0e6ce 0%,#f7f0e0 40%,#fdfaf2 100%)!important;display:flex;align-items:center;justify-content:center;padding:28px;border-radius:0 4px 4px 0!important;cursor:pointer}
+        .book-back-physical-inner{text-align:center;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(27,58,92,0.18);padding:24px;position:relative}
+        .book-back-physical-inner::before{content:'';position:absolute;inset:6px;border:1px solid rgba(27,58,92,0.08);pointer-events:none}
+        .book-back-physical-inner .back-emblem{width:52px;height:52px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+        .book-back-physical-inner .back-emblem i{font-size:22px;color:var(--navy-deep)}
+        .book-back-physical-inner h3{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy-dark);letter-spacing:.5px;margin-bottom:4px}
+        .book-back-physical-inner p{font-size:10px;color:var(--navy-medium);letter-spacing:4px;text-transform:uppercase}
+        .book-back-physical-inner .reopen-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--navy-pale);letter-spacing:1px;display:flex;align-items:center;gap:5px;animation:hintPulse 2.5s ease-in-out infinite}
+        .page-content{padding:24px 30px 18px;height:100%;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--cream-darker) transparent}
+        .page-content::-webkit-scrollbar{width:4px}
+        .page-content::-webkit-scrollbar-track{background:transparent}
+        .page-content::-webkit-scrollbar-thumb{background:var(--cream-darker);border-radius:2px}
+        .page-header{text-align:center;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(27,58,92,0.1)}
+        .page-header h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy-dark);margin-bottom:5px}
+        .header-line{width:50px;height:2px;background:var(--gold);margin:0 auto}
+        .page-subtitle{font-size:11px;color:var(--text-muted);margin-top:4px;font-style:italic}
+        .page-text{font-size:12.5px;line-height:1.75;color:var(--text-body);margin-bottom:10px}
+        .page-text strong{color:var(--text-dark)}
+        .info-card{background:var(--navy-faint);border-left:3px solid var(--navy);padding:10px 12px;margin:10px 0;border-radius:0 6px 6px 0}
+        .info-card h4{font-family:'Playfair Display',serif;font-size:13px;font-weight:600;color:var(--navy-dark);margin-bottom:3px}
+        .info-card p{font-size:12px;line-height:1.65;color:var(--text-body)}
+        .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+        .stat-item{text-align:center;padding:10px 4px;background:var(--navy-faint);border-radius:8px}
+        .stat-number{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--navy);display:block}
+        .stat-label{font-size:9px;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;display:block}
+        .values-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}
+        .value-item{display:flex;align-items:flex-start;gap:8px;padding:8px;background:var(--navy-faint);border-radius:8px}
+        .value-item i{color:var(--navy-medium);font-size:12px;margin-top:2px;flex-shrink:0}
+        .value-item h5{font-family:'Playfair Display',serif;font-size:11.5px;font-weight:600;color:var(--text-dark);margin-bottom:1px}
+        .value-item p{font-size:10px;line-height:1.45;color:var(--text-muted)}
+        .dept-list{list-style:none;margin:6px 0}
+        .dept-list li{display:flex;align-items:center;gap:9px;padding:7px 6px;border-bottom:1px solid rgba(27,58,92,0.06);font-size:12px;color:var(--text-body)}
+        .dept-list li i{color:var(--navy-medium);font-size:10px;width:14px;text-align:center}
+        .activity-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin:10px 0}
+        .activity-card{padding:10px;background:var(--navy-faint);border-radius:8px;text-align:center}
+        .activity-card i{font-size:18px;color:var(--navy-medium);margin-bottom:4px;display:block}
+        .activity-card h5{font-family:'Playfair Display',serif;font-size:11px;font-weight:600;color:var(--text-dark);margin-bottom:2px}
+        .activity-card p{font-size:9.5px;color:var(--text-muted);line-height:1.4}
+        .social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}
+        .social-card{padding:10px 5px;text-align:center;border-radius:8px;border:1px solid rgba(27,58,92,0.08);transition:all .2s;cursor:pointer}
+        .social-card:hover{border-color:var(--navy);background:var(--navy-faint)}
+        .social-card i{font-size:17px;margin-bottom:3px;display:block}
+        .social-card h5{font-size:10px;font-weight:600;color:var(--text-dark);margin-bottom:1px}
+        .social-card span{font-size:8.5px;color:var(--text-muted)}
+        .social-card.fb i{color:#1877F2}.social-card.ig i{color:#E4405F}.social-card.yt i{color:#FF0000}.social-card.tw i{color:#1DA1F2}.social-card.li i{color:#0A66C2}.social-card.wa i{color:#25D366}
+        .newsletter-box{background:var(--navy-faint);border-radius:8px;padding:10px;margin:10px 0;text-align:center}
+        .newsletter-box h4{font-family:'Playfair Display',serif;font-size:12px;color:var(--navy-dark);margin-bottom:5px}
+        .newsletter-box p{font-size:10px;color:var(--text-muted);margin-bottom:7px}
+        .newsletter-form{display:flex;gap:5px}
+        .newsletter-form input{flex:1;padding:6px 9px;border:1px solid rgba(27,58,92,0.12);border-radius:5px;font-family:'Lora',serif;font-size:11px;color:var(--text-dark);background:var(--cream);outline:none}
+        .newsletter-form input:focus{border-color:var(--navy)}
+        .newsletter-form button{padding:6px 11px;background:var(--navy);color:var(--cream);border:none;border-radius:5px;font-family:'Lora',serif;font-size:10px;cursor:pointer;white-space:nowrap;transition:background .2s}
+        .newsletter-form button:hover{background:var(--navy-dark)}
+        .contact-info-list{list-style:none;margin:6px 0}
+        .contact-info-list li{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:11.5px;color:var(--text-body)}
+        .contact-info-list li i{color:var(--navy-medium);font-size:11px;margin-top:2px;width:14px;text-align:center;flex-shrink:0}
+        .contact-form{margin:8px 0}
+        .form-row{display:flex;gap:7px;margin-bottom:6px}
+        .form-group{flex:1}
+        .form-group label{display:block;font-size:10.5px;font-weight:500;color:var(--text-dark);margin-bottom:2px}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:5px 8px;border:1px solid rgba(27,58,92,0.12);border-radius:5px;font-family:'Lora',serif;font-size:11.5px;color:var(--text-dark);background:rgba(255,254,248,0.8);outline:none;transition:border-color .2s}
+        .form-group input:focus,.form-group textarea:focus{border-color:var(--navy)}
+        .form-group textarea{height:50px;resize:none}
+        .btn-submit{display:inline-flex;align-items:center;gap:5px;padding:7px 18px;background:var(--navy);color:var(--cream);border:none;border-radius:5px;font-family:'Lora',serif;font-size:11.5px;font-weight:500;cursor:pointer;transition:background .2s;margin-top:2px}
+        .btn-submit:hover{background:var(--navy-dark)}
+        .page-number{position:absolute;bottom:8px;right:18px;font-family:'Playfair Display',serif;font-size:10px;color:rgba(27,58,92,0.18);font-style:italic}
+        .map-embed{width:100%;height:130px;border-radius:8px;margin:8px 0;border:1px solid rgba(27,58,92,0.1);overflow:hidden;background:var(--navy-faint)}
+        .map-embed iframe{width:100%;height:100%;border:0;display:block}
+        .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
+        .gallery-item{position:relative;border-radius:6px;overflow:hidden;background:var(--navy-faint);cursor:pointer;transition:transform .25s,box-shadow .25s;aspect-ratio:4/3}
+        .gallery-item:hover{transform:scale(1.02);box-shadow:0 4px 16px rgba(27,58,92,0.15)}
+        .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+        .gallery-item:hover img{transform:scale(1.06)}
+        .gallery-caption{position:absolute;bottom:0;left:0;right:0;padding:18px 8px 6px;background:linear-gradient(to top,rgba(12,30,51,0.85) 0%,transparent 100%);font-size:9.5px;color:rgba(255,254,248,0.9);line-height:1.3}
+        .gallery-caption strong{display:block;font-size:10.5px;color:#fff;margin-bottom:1px}
+        .lightbox{position:fixed;inset:0;z-index:3000;background:rgba(8,18,30,0.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+        .lightbox.active{opacity:1;pointer-events:auto}
+        .lightbox-inner{position:relative;max-width:85vw;max-height:80vh;transform:scale(.9);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+        .lightbox.active .lightbox-inner{transform:scale(1)}
+        .lightbox-inner img{max-width:85vw;max-height:80vh;border-radius:8px;box-shadow:0 16px 60px rgba(0,0,0,0.5)}
+        .lightbox-caption{text-align:center;margin-top:12px;font-family:'Playfair Display',serif;font-size:15px;color:rgba(255,254,248,0.8)}
+        .lightbox-close{position:absolute;top:-40px;right:0;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,254,248,0.2);background:rgba(255,254,248,0.08);color:rgba(255,254,248,0.7);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+        .lightbox-close:hover{background:rgba(255,254,248,0.15);color:#fff}
+        .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,254,248,0.15);background:rgba(255,254,248,0.06);color:rgba(255,254,248,0.6);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+        .lightbox-nav:hover{background:rgba(255,254,248,0.12);color:#fff}
+        .lightbox-nav.prev{left:-56px}.lightbox-nav.next{right:-56px}
+        .nav-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid rgba(184,148,26,0.2);background:rgba(10,7,5,0.75);backdrop-filter:blur(10px);color:var(--gold-light);font-size:15px;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;z-index:100}
+        .nav-arrow:hover{background:var(--navy-dark);border-color:var(--gold)}
+        .nav-arrow.prev{left:-60px}.nav-arrow.next{right:-60px}
+        .nav-arrow:disabled{opacity:.2;cursor:not-allowed;pointer-events:none}
+        .page-indicators{display:flex;gap:4px;margin-top:18px;align-items:center;flex-wrap:wrap;justify-content:center}
+        .page-dot{padding:4px 10px;border-radius:16px;border:1px solid rgba(184,148,26,0.15);background:transparent;color:rgba(255,254,248,0.4);font-family:'Lora',serif;font-size:9.5px;cursor:pointer;transition:all .3s;white-space:nowrap}
+        .page-dot:hover{border-color:var(--gold);color:var(--gold)}
+        .page-dot.active{background:var(--gold);border-color:var(--gold);color:var(--navy-deep);font-weight:600}
+        .page-dot.icon-only{padding:4px 7px;font-size:10px}
+        .current-page-title{margin-top:8px;font-family:'Playfair Display',serif;font-size:13px;color:rgba(184,148,26,0.4);font-style:italic;min-height:18px}
+        .flip-hint{margin-top:8px;font-size:10px;color:rgba(255,254,248,0.18);display:flex;align-items:center;gap:6px}
+        .flip-hint i{animation:swipeHint 2.5s ease-in-out infinite}
+        @keyframes swipeHint{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+        .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--navy-dark);color:var(--cream);padding:11px 22px;border-radius:8px;font-family:'Lora',serif;font-size:13px;z-index:4000;transition:transform .4s cubic-bezier(.16,1,.3,1);box-shadow:0 8px 28px rgba(0,0,0,0.4);border:1px solid rgba(184,148,26,0.12)}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        @media(max-width:820px){.school-title{padding:20px 16px 6px}.school-title h1{font-size:20px;letter-spacing:1px}.school-title .tagline{font-size:9px;letter-spacing:3px}.book-scene{padding:14px 10px 10px}.book{width:92vw;height:60vh;min-height:370px;max-height:520px}.nav-arrow.prev{left:-6px}.nav-arrow.next{right:-6px}.nav-arrow{width:36px;height:36px;font-size:13px}.cover h2{font-size:20px}.cover .truly-cbse{font-size:9px;letter-spacing:3px}.cover-shield{width:52px;height:52px}.cover-shield i{font-size:22px}.cover-inner{padding:16px 10px}.cover-inner::before{inset:5px}.cover-corner{width:14px;height:14px}.cover-corner.tl{top:10px;left:10px}.cover-corner.tr{top:10px;right:10px}.cover-corner.bl{bottom:10px;left:10px}.cover-corner.br{bottom:10px;right:10px}.page-content{padding:16px 16px 14px}.page-header h2{font-size:17px}.page-text{font-size:11.5px}.stats-grid{gap:5px}.stat-item{padding:7px 3px}.stat-number{font-size:19px}.values-grid{grid-template-columns:1fr}.social-grid{grid-template-columns:repeat(2,1fr);gap:5px}.form-row{flex-direction:column;gap:4px}.page-dot{padding:3px 7px;font-size:8.5px}.page-dot.icon-only{padding:3px 5px;font-size:9px}.book-spine{left:-5px;width:7px}.book-edge{right:-3px;width:5px}.gallery-caption{font-size:8px;padding:14px 6px 4px}.gallery-caption strong{font-size:9px}.lightbox-nav.prev{left:-8px}.lightbox-nav.next{right:-8px}.lightbox-nav{width:32px;height:32px;font-size:12px}.map-embed{height:110px}}
+        @media(max-width:420px){.school-title h1{font-size:16px}.school-title .tagline{font-size:7.5px;letter-spacing:2px}.school-title .ornament{font-size:10px}.book{width:96vw;height:56vh;min-height:330px}.cover h2{font-size:17px}.cover .truly-cbse{font-size:8px;letter-spacing:2px}.cover .est{font-size:8px}.cover .motto{font-size:9px}.page-content{padding:12px 10px 12px}.page-header h2{font-size:15px}.stats-grid{gap:3px}.stat-number{font-size:16px}.stat-label{font-size:7px}.activity-grid{grid-template-columns:1fr 1fr;gap:5px}.social-grid{grid-template-columns:repeat(2,1fr)}.nav-arrow.prev{left:-3px}.nav-arrow.next{right:-3px}.nav-arrow{width:30px;height:30px;font-size:11px}.page-indicators{gap:2px}.page-dot{padding:2px 5px;font-size:7.5px}.page-dot.icon-only{padding:2px 4px}.flip-hint{font-size:8px}.gallery-grid{gap:5px}.lightbox-nav{display:none}.map-embed{height:90px}.contact-info-list li{font-size:10.5px}}
+    </style>
+</head>
+<body>
+
+<div class="school-title">
+    <div class="ornament">&#10022; &#10022; &#10022;</div>
+    <h1>Aravinda High School</h1>
+    <div class="tagline">Truly CBSE</div>
+    <div class="title-divider"></div>
+</div>
+
+<div class="book-scene">
+    <div class="book-container">
+        <button class="nav-arrow prev" id="prevBtn" aria-label="Previous page" disabled><i class="fas fa-chevron-left"></i></button>
+
+        <div class="book" id="book">
+            <div class="book-spine"></div>
+            <div class="book-edge"></div>
+
+            <!-- PAGE 0: COVER -->
+            <div class="page" data-index="0">
+                <div class="front cover">
+                    <div class="cover-inner">
+                        <div class="cover-corner tl"></div><div class="cover-corner tr"></div>
+                        <div class="cover-corner bl"></div><div class="cover-corner br"></div>
+                        <div class="cover-shield"><i class="fas fa-graduation-cap"></i></div>
+                        <h2>Aravinda High School</h2>
+                        <div class="truly-cbse">Truly CBSE</div>
+                        <div class="cover-divider"></div>
+                        <div class="est">Affiliation No. 130633</div>
+                        <div class="motto">Striving For Deep Holistic Education</div>
+                        <div class="open-hint"><i class="fas fa-hand-pointer"></i> Drag to open</div>
+                    </div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-graduation-cap"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 1: ABOUT US -->
+            <div class="page" data-index="1">
+                <div class="front">
+                    <div class="page-content">
+                        <div class="page-header"><h2>About Us</h2><div class="header-line"></div><div class="page-subtitle">Our Legacy &amp; Heritage</div></div>
+                        <p class="page-text"><strong>Aravinda High School</strong> was founded with a vision to provide truly holistic CBSE education that nurtures every dimension of a child's personality. Nestled in the serene surroundings of Kunchanapalli, Guntur District, we have grown into one of the most trusted educational institutions in the region.</p>
+                        <div class="stats-grid">
+                            <div class="stat-item"><span class="stat-number">1500+</span><span class="stat-label">Students</span></div>
+                            <div class="stat-item"><span class="stat-number">80+</span><span class="stat-label">Faculty</span></div>
+                            <div class="stat-item"><span class="stat-number">10</span><span class="stat-label">Acres</span></div>
+                        </div>
+                        <div class="info-card">
+                            <h4>From the Principal's Desk</h4>
+                            <p>"At Aravinda High School, we believe education goes far beyond textbooks. Our commitment to deep holistic education ensures that every child develops intellectually, emotionally, and physically." &#8212; Dr. Lakshmi Devi, Principal</p>
+                        </div>
+                        <p class="page-text">Affiliated to the <strong>CBSE (Affiliation No. 130633)</strong>, our campus features smart classrooms, state-of-the-art laboratories, a vast library with over 15,000 books, and excellent sports facilities spread across lush green grounds.</p>
+                        <div class="page-curl" data-next="1"></div>
+                    </div>
+                    <div class="page-number">1</div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-school"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 2: VISION -->
+            <div class="page" data-index="2">
+                <div class="front">
+                    <div class="page-content">
+                        <div class="page-header"><h2>Our Vision</h2><div class="header-line"></div><div class="page-subtitle">Guiding Principles &amp; Values</div></div>
+                        <div class="info-card"><h4><i class="fas fa-eye" style="margin-right:5px"></i>Vision</h4><p>To nurture future leaders with knowledge, integrity, and compassion who will contribute meaningfully to a global society while being rooted in our cultural heritage.</p></div>
+                        <div class="info-card"><h4><i class="fas fa-bullseye" style="margin-right:5px"></i>Mission</h4><p>Provide deep holistic education combining academic excellence with character development, empowering students to discover their true potential.</p></div>
+                        <p class="page-text" style="margin-top:10px"><strong>Our Core Values:</strong></p>
+                        <div class="values-grid">
+                            <div class="value-item"><i class="fas fa-gem"></i><div><h5>Integrity</h5><p>Upholding honesty and strong moral principles.</p></div></div>
+                            <div class="value-item"><i class="fas fa-star"></i><div><h5>Excellence</h5><p>Striving for the highest standards always.</p></div></div>
+                            <div class="value-item"><i class="fas fa-heart"></i><div><h5>Compassion</h5><p>Fostering empathy and care for others.</p></div></div>
+                            <div class="value-item"><i class="fas fa-lightbulb"></i><div><h5>Innovation</h5><p>Encouraging creative thinking and new ideas.</p></div></div>
+                            <div class="value-item"><i class="fas fa-shield-alt"></i><div><h5>Discipline</h5><p>Cultivating self-control and responsibility.</p></div></div>
+                            <div class="value-item"><i class="fas fa-users"></i><div><h5>Teamwork</h5><p>Building collaborative spirit in all endeavours.</p></div></div>
+                        </div>
+                        <div class="page-curl" data-next="2"></div>
+                    </div>
+                    <div class="page-number">2</div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-eye"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 3: ACADEMICS -->
+            <div class="page" data-index="3">
+                <div class="front">
+                    <div class="page-content">
+                        <div class="page-header"><h2>Academics</h2><div class="header-line"></div><div class="page-subtitle">Curriculum &amp; Departments</div></div>
+                        <p class="page-text">We offer the <strong>CBSE curriculum</strong> from Class VI through Class XII with Science, Commerce, and Humanities streams at the senior secondary level.</p>
+                        <p class="page-text" style="margin-bottom:5px"><strong>Academic Departments:</strong></p>
+                        <ul class="dept-list">
+                            <li><i class="fas fa-flask"></i> Science &#8212; Physics, Chemistry, Biology</li>
+                            <li><i class="fas fa-calculator"></i> Mathematics</li>
+                            <li><i class="fas fa-language"></i> Languages &#8212; English, Hindi, Sanskrit</li>
+                            <li><i class="fas fa-globe-asia"></i> Social Studies &#8212; History, Geography, Civics</li>
+                            <li><i class="fas fa-laptop-code"></i> Computer Science &amp; IT</li>
+                            <li><i class="fas fa-palette"></i> Fine Arts &amp; Creative Expression</li>
+                        </ul>
+                        <div class="stats-grid">
+                            <div class="stat-item"><span class="stat-number">95%</span><span class="stat-label">Pass Rate</span></div>
+                            <div class="stat-item"><span class="stat-number">30+</span><span class="stat-label">Top Scorers</span></div>
+                            <div class="stat-item"><span class="stat-number">15K</span><span class="stat-label">Library Books</span></div>
+                        </div>
+                        <div class="info-card"><h4>Facilities</h4><p>Smart classrooms with digital boards, fully equipped science labs, computer lab with 60 workstations, mathematics lab, and a spacious library with reading room.</p></div>
+                        <div class="page-curl" data-next="3"></div>
+                    </div>
+                    <div class="page-number">3</div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-book-open"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 4: ACTIVITIES -->
+            <div class="page" data-index="4">
+                <div class="front">
+                    <div class="page-content">
+                        <div class="page-header"><h2>Activities</h2><div class="header-line"></div><div class="page-subtitle">Beyond the Classroom</div></div>
+                        <p class="page-text" style="margin-bottom:5px"><strong>Sports:</strong></p>
+                        <div class="activity-grid">
+                            <div class="activity-card"><i class="fas fa-cricket-bat-ball"></i><h5>Cricket</h5><p>District champions 2023</p></div>
+                            <div class="activity-card"><i class="fas fa-futbol"></i><h5>Football</h5><p>State-level participants</p></div>
+                            <div class="activity-card"><i class="fas fa-basketball"></i><h5>Basketball</h5><p>Inter-school winners</p></div>
+                            <div class="activity-card"><i class="fas fa-running"></i><h5>Athletics</h5><p>Track &amp; field excellence</p></div>
+                        </div>
+                        <p class="page-text" style="margin-bottom:5px"><strong>Arts &amp; Culture:</strong></p>
+                        <div class="activity-grid">
+                            <div class="activity-card"><i class="fas fa-music"></i><h5>Music</h5><p>Classical &amp; western</p></div>
+                            <div class="activity-card"><i class="fas fa-theater-masks"></i><h5>Drama &amp; Dance</h5><p>Annual productions</p></div>
+                        </div>
+                        <p class="page-text" style="margin-bottom:5px"><strong>Clubs &amp; Societies:</strong></p>
+                        <ul class="dept-list">
+                            <li><i class="fas fa-atom"></i> Science Club &#8212; Experiments &amp; innovation</li>
+                            <li><i class="fas fa-pen-fancy"></i> Literary Club &#8212; Debates &amp; writing</li>
+                            <li><i class="fas fa-leaf"></i> Eco Club &#8212; Environmental awareness</li>
+                            <li><i class="fas fa-robot"></i> Robotics Club &#8212; STEM activities</li>
+                        </ul>
+                        <div class="page-curl" data-next="4"></div>
+                    </div>
+                    <div class="page-number">4</div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-futbol"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 5: GALLERY -->
+            <div class="page" data-index="5">
+                <div class="front">
+                    <div class="page-content">
+                        <div class="page-header"><h2>Gallery</h2><div class="header-line"></div><div class="page-subtitle">Glimpses of School Life</div></div>
+                        <p class="page-text">Moments that capture the spirit, culture, and vibrancy of Aravinda High School.</p>
+                        <div class="gallery-grid">
+                            <div class="gallery-item" onclick="openLightbox(0)">
+                                <img src="https://z-cdn-media.chatglm.cn/files/8ae4de52-109e-4f19-924e-9b8c18cff8eb.png?auth_key=1884650796-5623ebff40df4f5eba0edaf1670f2012-0-06d8bf63356a8312f96adbcb03771912" alt="Human Pyramid" loading="lazy">
+                                <div class="gallery-caption"><strong>Human Pyramid Formation</strong>Students performing with the Tricolour</div>
+                            </div>
+                            <div class="gallery-item" onclick="openLightbox(1)">
+                                <img src="https://z-cdn-media.chatglm.cn/files/39bcd7b7-e802-4d05-bf0b-7f8faacbc881.png?auth_key=1884650796-42714d1cb92f4fd5bff14c2fa078ec2d-0-662a94b9f30904deac0cd34fb40828ef" alt="Srujanotsavam" loading="lazy">
+                                <div class="gallery-caption"><strong>Aravinda Srujanotsavam</strong>Annual cultural festival</div>
+                            </div>
+                            <div class="gallery-item" onclick="openLightbox(2)">
+                                <img src="https://z-cdn-media.chatglm.cn/files/05732402-a06d-4b48-8680-63f01239a948.png?auth_key=1884650796-e1f6403423434a3f80530d59956e80b0-0-74ec93841106c8ba69c69014dc2cecc0" alt="Folk Dance" loading="lazy">
+                                <div class="gallery-caption"><strong>Traditional Folk Dance</strong>Vibrant circle dance performance</div>
+                            </div>
+                            <div class="gallery-item" onclick="openLightbox(3)">
+                                <img src="https://z-cdn-media.chatglm.cn/files/eb505dc3-5404-40e9-883a-a0d09cfd1710.png?auth_key=1884650796-08fd5d9a8556406c82a1c31bb02e62c2-0-bb57242fdd8d167c4003fa0583859b06" alt="Art Exhibition" loading="lazy">
+                                <div class="gallery-caption"><strong>Art &amp; Craft Exhibition</strong>Colourful handmade creations</div>
+                            </div>
+                        </div>
+                        <div class="page-curl" data-next="5"></div>
+                    </div>
+                    <div class="page-number">5</div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-images"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 6: SOCIAL MEDIA -->
+            <div class="page" data-index="6">
+                <div class="front">
+                    <div class="page-content">
+                        <div class="page-header"><h2>Social Media</h2><div class="header-line"></div><div class="page-subtitle">Stay Connected With Us</div></div>
+                        <p class="page-text">Follow us for the latest updates, event photos, student achievements, and announcements.</p>
+                        <div class="social-grid">
+                            <div class="social-card fb" onclick="showToast('Opening Facebook...')"><i class="fab fa-facebook-f"></i><h5>Facebook</h5><span>12.5K</span></div>
+                            <div class="social-card ig" onclick="showToast('Opening Instagram...')"><i class="fab fa-instagram"></i><h5>Instagram</h5><span>8.2K</span></div>
+                            <div class="social-card yt" onclick="showToast('Opening YouTube...')"><i class="fab fa-youtube"></i><h5>YouTube</h5><span>3.1K</span></div>
+                            <div class="social-card tw" onclick="showToast('Opening Twitter...')"><i class="fab fa-twitter"></i><h5>Twitter</h5><span>5.4K</span></div>
+                            <div class="social-card li" onclick="showToast('Opening LinkedIn...')"><i class="fab fa-linkedin-in"></i><h5>LinkedIn</h5><span>2.8K</span></div>
+                            <div class="social-card wa" onclick="showToast('Opening WhatsApp...')"><i class="fab fa-whatsapp"></i><h5>WhatsApp</h5><span>Join</span></div>
+                        </div>
+                        <div class="newsletter-box">
+                            <h4><i class="fas fa-newspaper" style="margin-right:5px"></i>School Newsletter</h4>
+                            <p>Subscribe for monthly updates about events and achievements.</p>
+                            <div class="newsletter-form">
+                                <input type="email" id="newsletterEmail" placeholder="Your email address">
+                                <button onclick="subscribeNewsletter()">Subscribe</button>
+                            </div>
+                        </div>
+                        <div class="page-curl" data-next="6"></div>
+                    </div>
+                    <div class="page-number">6</div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-share-alt"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 7: CONTACT US -->
+            <div class="page" data-index="7">
+                <div class="front">
+                    <div class="page-content">
+                        <div class="page-header"><h2>Contact Us</h2><div class="header-line"></div><div class="page-subtitle">We'd Love to Hear From You</div></div>
+                        <ul class="contact-info-list">
+                            <li><i class="fas fa-map-marker-alt"></i><span>Aravinda High School,<br>Beside Bank of Baroda, Kunchanapalli Branch,<br>Kunchanapalli, Tadepalli Mandal,<br>Guntur District, Andhra Pradesh</span></li>
+                            <li><i class="fas fa-phone-alt"></i><span>90328 36683</span></li>
+                            <li><i class="fas fa-envelope"></i><span>info@aravindahighschool.edu.in</span></li>
+                            <li><i class="fas fa-clock"></i><span>Mon &#8211; Fri: 8:00 AM &#8211; 4:00 PM<br>Sat: 8:00 AM &#8211; 12:00 PM</span></li>
+                        </ul>
+                        <div class="map-embed">
+                            <iframe src="https://maps.google.com/maps?q=16.470562,80.612813&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Aravinda High School Location"></iframe>
+                        </div>
+                        <p class="page-text" style="margin-bottom:4px"><strong>Send us a message:</strong></p>
+                        <div class="contact-form" id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group"><label for="cName">Name</label><input type="text" id="cName" placeholder="Full name"></div>
+                                <div class="form-group"><label for="cPhone">Phone</label><input type="tel" id="cPhone" placeholder="Phone number"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group"><label for="cEmail">Email</label><input type="email" id="cEmail" placeholder="Email address"></div>
+                                <div class="form-group">
+                                    <label for="cSubject">Subject</label>
+                                    <select id="cSubject">
+                                        <option value="">Select...</option>
+                                        <option>Admission Enquiry</option>
+                                        <option>Academic Info</option>
+                                        <option>Fee Details</option>
+                                        <option>Feedback</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:6px">
+                                <label for="cMessage">Message</label>
+                                <textarea id="cMessage" placeholder="Write your message..."></textarea>
+                            </div>
+                            <button class="btn-submit" onclick="submitContactForm()"><i class="fas fa-paper-plane"></i> Send Message</button>
+                        </div>
+                        <div class="page-curl" data-next="7"></div>
+                    </div>
+                    <div class="page-number">7</div>
+                </div>
+                <div class="back"><div class="back-pattern"><i class="fas fa-envelope"></i><span>AHS</span></div></div>
+            </div>
+
+            <!-- PAGE 8: BACK COVER -->
+            <div class="page" data-index="8">
+                <div class="front back-cover-design">
+                    <div class="back-cover-design-inner">
+                        <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                        <p class="quote-text">"Education is the most powerful weapon which you can use to change the world."</p>
+                        <div class="quote-author">&#8212; Nelson Mandela</div>
+                        <div class="close-hint"><i class="fas fa-hand-pointer"></i> Close the book</div>
+                    </div>
+                </div>
+                <div class="back book-back-physical" id="bookBackPhysical">
+                    <div class="book-back-physical-inner">
+                        <div class="back-emblem"><i class="fas fa-graduation-cap"></i></div>
+                        <h3>Aravinda High School</h3>
+                        <p>Truly CBSE</p>
+                        <div class="reopen-hint"><i class="fas fa-hand-pointer"></i> Tap to reopen</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="nav-arrow next" id="nextBtn" aria-label="Next page"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="page-indicators" id="pageIndicators">
+        <button class="page-dot icon-only active" data-page="0" title="Cover"><i class="fas fa-book"></i></button>
+        <button class="page-dot" data-page="1">About Us</button>
+        <button class="page-dot" data-page="2">Vision</button>
+        <button class="page-dot" data-page="3">Academics</button>
+        <button class="page-dot" data-page="4">Activities</button>
+        <button class="page-dot" data-page="5">Gallery</button>
+        <button class="page-dot" data-page="6">Social Media</button>
+        <button class="page-dot" data-page="7">Contact Us</button>
+        <button class="page-dot icon-only" data-page="8" title="Back Cover"><i class="fas fa-book-reader"></i></button>
+    </div>
+
+    <div class="current-page-title" id="currentPageTitle">Cover</div>
+    <div class="flip-hint"><i class="fas fa-hand-pointer"></i><span>Drag pages to turn them like a real book</span></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close"><i class="fas fa-times"></i></button>
+        <button class="lightbox-nav prev" onclick="lightboxNav(-1)" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-nav next" onclick="lightboxNav(1)" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+        <img id="lightboxImg" src="" alt="Gallery image">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var pages=document.querySelectorAll('.page');
+var totalPages=pages.length;
+var currentPage=0;
+var isAnimating=false;
+var pageNames=['Cover','About Us','Vision','Academics','Activities','Gallery','Social Media','Contact Us','Back Cover'];
+
+pages.forEach(function(pg){
+    var f=document.createElement('div');f.className='fold-overlay';
+    pg.querySelector('.front').appendChild(f);
+    var b=document.createElement('div');b.className='fold-overlay';
+    pg.querySelector('.back').appendChild(b);
+});
+
+function updateZIndex(fi){
+    pages.forEach(function(pg,i){
+        if(i===fi)pg.style.zIndex=100;
+        else if(i<currentPage)pg.style.zIndex=i;
+        else pg.style.zIndex=50+(totalPages-i);
+    });
+}
+
+function updateFoldOverlays(page,angleDeg){
+    var absA=Math.abs(angleDeg);
+    var ff=page.querySelector('.front .fold-overlay');
+    var bf=page.querySelector('.back .fold-overlay');
+    if(absA<2){ff.classList.remove('visible');bf.classList.remove('visible');return;}
+    var progress=Math.min(absA/180,1);
+    var fE=Math.round((1-progress)*100);
+    var fI=(Math.sin(progress*Math.PI)*0.35).toFixed(3);
+    var fH=(Math.sin(progress*Math.PI*0.8)*0.08).toFixed(3);
+    ff.style.background='linear-gradient(to left,rgba(0,0,0,'+fI+') 0%,rgba(0,0,0,0) '+Math.max(fE,1)+'%,rgba(255,255,255,'+fH+') '+Math.min(fE+8,100)+'%,transparent '+Math.min(fE+18,100)+'%)';
+    ff.classList.add('visible');
+    var bE=Math.round(progress*100);
+    var bI=(Math.sin(progress*Math.PI)*0.3).toFixed(3);
+    var bH=(Math.sin(progress*Math.PI*0.8)*0.06).toFixed(3);
+    bf.style.background='linear-gradient(to right,rgba(0,0,0,'+bI+') 0%,rgba(0,0,0,0) '+Math.max(bE,1)+'%,rgba(255,255,255,'+bH+') '+Math.min(bE+6,100)+'%,transparent '+Math.min(bE+14,100)+'%)';
+    bf.classList.add('visible');
+}
+
+function setPageAngle(page,angleDeg){
+    page.classList.add('no-transition');
+    page.style.transform='rotateY('+angleDeg+'deg)';
+    updateFoldOverlays(page,angleDeg);
+}
+
+function getAngle(page){
+    var m=page.style.transform.match(/-?\d+\.?\d*/);
+    return m?parseFloat(m[0]):0;
+}
+
+function animatePageTo(page,target,duration,easing,onDone){
+    var start=getAngle(page);
+    var t0=performance.now();
+    page.classList.add('no-transition');
+    function tick(now){
+        var t=Math.min((now-t0)/duration,1);
+        var et=easing(t);
+        var cur=start+(target-start)*et;
+        page.style.transform='rotateY('+cur+'deg)';
+        updateFoldOverlays(page,cur);
+        if(t<1)requestAnimationFrame(tick);
+        else{page.style.transform='rotateY('+target+'deg)';updateFoldOverlays(page,target);if(onDone)onDone();}
+    }
+    requestAnimationFrame(tick);
+}
+
+var easeOutCubic=function(t){return 1-Math.pow(1-t,3)};
+var easeOutQuart=function(t){return 1-Math.pow(1-t,4)};
+
+function settlePage(page,from,to,dur,onDone){
+    var over=to+(to-from)*0.04;
+    animatePageTo(page,over,dur*0.7,easeOutCubic,function(){
+        animatePageTo(page,to,dur*0.3,easeOutQuart,function(){if(onDone)onDone();});
+    });
+}
+
+function snapPageTo(idx,dir,onDone){
+    var page=pages[idx];
+    var target=dir==='forward'?-180:0;
+    var current=getAngle(page);
+    page.classList.add('flipping');
+    var dist=Math.abs(target-current);
+    var dur=Math.max(600,Math.min(1800,dist/180*2000));
+    settlePage(page,current,target,dur,function(){
+        page.classList.remove('flipping');
+        if(target===-180)page.classList.add('flipped');
+        else page.classList.remove('flipped');
+        updateZIndex();if(onDone)onDone();
+    });
+}
+
+function goToPage(target){
+    if(isAnimating||target===currentPage||target<0||target>=totalPages)return;
+    isAnimating=true;
+    var goingForward=target>currentPage;
+    var start=goingForward?currentPage:target;
+    var end=goingForward?target-1:currentPage-1;
+    var dir=goingForward?'forward':'backward';
+    var stagger=250;
+    var completed=0;
+    var total=Math.abs(target-currentPage);
+    if(goingForward){
+        for(var i=start;i<=end;i++){
+            (function(ii){setTimeout(function(){
+                snapPageTo(ii,'forward',function(){completed++;if(completed>=total)finishNav();});
+            },(ii-start)*stagger);})(i);
+        }
+    }else{
+        for(var i=end;i>=start;i--){
+            (function(ii){setTimeout(function(){
+                snapPageTo(ii,'backward',function(){completed++;if(completed>=total)finishNav();});
+            },(end-ii)*stagger);})(i);
+        }
+    }
+    currentPage=target;updateUI();
+}
+
+function finishNav(){isAnimating=false;updateZIndex();updateUI();updateBookState();}
+
+var book=document.getElementById('book');
+var isDragging=false;
+var dragPageIdx=-1;
+var dragDirection='';
+var dragStartX=0;
+var dragStartAngle=0;
+
+function getX(e){return e.touches&&e.touches.length>0?e.touches[0].clientX:e.clientX;}
+
+function onDragStart(e){
+    if(isAnimating)return;
+    var x=getX(e);
+    var r=book.getBoundingClientRect();
+    if(x>r.left&&x<r.right&&((e.target===book)||book.contains(e.target))){
+        var interactive=e.target.closest('a,button,input,textarea,select,.gallery-item,.social-card,.page-curl,.cover-inner,.back-cover-design-inner,.book-back-physical,iframe');
+        if(interactive)return;
+        e.preventDefault();
+        if(currentPage<totalPages-1){dragPageIdx=currentPage;dragDirection='forward';}
+        else if(currentPage>0){dragPageIdx=currentPage-1;dragDirection='backward';}
+        else return;
+        isDragging=true;dragStartX=x;dragStartAngle=getAngle(pages[dragPageIdx]);
+        pages[dragPageIdx].classList.add('flipping');updateZIndex(dragPageIdx);
+    }
+}
+
+function onDragMove(e){
+    if(!isDragging||dragPageIdx<0)return;
+    e.preventDefault();
+    var x=getX(e);
+    var dx=x-dragStartX;
+    var bw=book.getBoundingClientRect().width;
+    var angle;
+    if(dragDirection==='forward'){angle=dragStartAngle+(dx/bw)*-180;angle=Math.max(-180,Math.min(0,angle));}
+    else{angle=dragStartAngle+(dx/bw)*180;angle=Math.max(-180,Math.min(0,angle));}
+    setPageAngle(pages[dragPageIdx],angle);
+}
+
+function onDragEnd(){
+    if(!isDragging||dragPageIdx<0)return;
+    isDragging=false;
+    var page=pages[dragPageIdx];
+    var cur=getAngle(page);
+    var threshold=-90;
+    var settleTo,settledur;
+    if((dragDirection==='forward'&&cur<threshold)||(dragDirection==='backward'&&cur>threshold)){
+        settleTo=dragDirection==='forward'?-180:0;
+        settledur=Math.max(400,Math.abs(settleTo-cur)/180*1200);
+    }else{
+        settleTo=dragDirection==='forward'?0:-180;
+        settledur=Math.max(300,Math.abs(settleTo-cur)/180*1000);
+    }
+    var willComplete=(settleTo===-180&&dragDirection==='forward')||(settleTo===0&&dragDirection==='backward');
+    settlePage(page,cur,settleTo,settledur,function(){
+        page.classList.remove('flipping');
+        if(settleTo===-180)page.classList.add('flipped');
+        else page.classList.remove('flipped');
+        updateFoldOverlays(page,settleTo);
+        if(willComplete){if(dragDirection==='forward')currentPage++;else currentPage--;}
+        updateZIndex();updateUI();updateBookState();dragPageIdx=-1;
+    });
+}
+
+book.addEventListener('mousedown',onDragStart);
+document.addEventListener('mousemove',onDragMove);
+document.addEventListener('mouseup',onDragEnd);
+book.addEventListener('touchstart',onDragStart,{passive:false});
+document.addEventListener('touchmove',onDragMove,{passive:false});
+document.addEventListener('touchend',onDragEnd);
+
+function nextPage(){goToPage(currentPage+1);}
+function prevPage(){goToPage(currentPage-1);}
+
+function updateBookState(){book.classList.toggle('book-closed',currentPage===totalPages-1);}
+
+function updateUI(){
+    document.getElementById('prevBtn').disabled=currentPage===0;
+    document.getElementById('nextBtn').disabled=currentPage===totalPages-1;
+    document.querySelectorAll('.page-dot').forEach(function(d){d.classList.toggle('active',parseInt(d.dataset.page)===currentPage);});
+    document.getElementById('currentPageTitle').textContent=pageNames[currentPage]||'';
+}
+
+document.getElementById('prevBtn').addEventListener('click',prevPage);
+document.getElementById('nextBtn').addEventListener('click',nextPage);
+document.querySelectorAll('.page-dot').forEach(function(d){d.addEventListener('click',function(){goToPage(parseInt(d.dataset.page));});});
+document.querySelectorAll('.page-curl').forEach(function(c){c.addEventListener('click',function(e){e.stopPropagation();nextPage();});});
+pages[0].querySelector('.cover-inner').addEventListener('click',function(){if(currentPage===0&&!isDragging)nextPage();});
+pages[8].querySelector('.back-cover-design-inner').addEventListener('click',function(){if(currentPage===7&&!isDragging)nextPage();});
+document.getElementById('bookBackPhysical').addEventListener('click',function(){if(currentPage===totalPages-1)prevPage();});
+document.addEventListener('keydown',function(e){
+    if(document.getElementById('lightbox').classList.contains('active')){
+        if(e.key==='Escape')closeLightbox();
+        if(e.key==='ArrowLeft')lightboxNav(-1);
+        if(e.key==='ArrowRight')lightboxNav(1);
+        return;
+    }
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')nextPage();
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')prevPage();
+});
+
+var galleryData=[
+    {src:'https://z-cdn-media.chatglm.cn/files/8ae4de52-109e-4f19-924e-9b8c18cff8eb.png?auth_key=1884650796-5623ebff40df4f5eba0edaf1670f2012-0-06d8bf63356a8312f96adbcb03771912',caption:'Human Pyramid Formation — Students performing the grand pyramid with the Tricolour'},
+    {src:'https://z-cdn-media.chatglm.cn/files/39bcd7b7-e802-4d05-bf0b-7f8faacbc881.png?auth_key=1884650796-42714d1cb92f4fd5bff14c2fa078ec2d-0-662a94b9f30904deac0cd34fb40828ef',caption:'Aravinda Srujanotsavam — Annual cultural festival stage performance'},
+    {src:'https://z-cdn-media.chatglm.cn/files/05732402-a06d-4b48-8680-63f01239a948.png?auth_key=1884650796-e1f6403423434a3f80530d59956e80b0-0-74ec93841106c8ba69c69014dc2cecc0',caption:'Traditional Folk Dance — Students in vibrant attire performing a circle dance'},
+    {src:'https://z-cdn-media.chatglm.cn/files/eb505dc3-5404-40e9-883a-a0d09cfd1710.png?auth_key=1884650796-08fd5d9a8556406c82a1c31bb02e62c2-0-bb57242fdd8d167c4003fa0583859b06',caption:'Art & Craft Exhibition — Colourful handmade creations on display'}
+];
+var currentLightbox=0;
+function openLightbox(idx){currentLightbox=idx;updateLightbox();document.getElementById('lightbox').classList.add('active');}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('active');}
+function lightboxNav(dir){currentLightbox=(currentLightbox+dir+galleryData.length)%galleryData.length;updateLightbox();}
+function updateLightbox(){document.getElementById('lightboxImg').src=galleryData[currentLightbox].src;document.getElementById('lightboxCaption').textContent=galleryData[currentLightbox].caption;}
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===document.getElementById('lightbox'))closeLightbox();});
+
+var toastTimer;
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},2500);}
+
+function submitContactForm(){
+    var n=document.getElementById('cName').value.trim();
+    var e=document.getElementById('cEmail').value.trim();
+    var m=document.getElementById('cMessage').value.trim();
+    if(!n||!e||!m){showToast('Please fill in the required fields.');return;}
+    showToast('Thank you! Your message has been sent.');
+    document.getElementById('contactForm').querySelectorAll('input,textarea,select').forEach(function(el){if(el.tagName==='SELECT')el.selectedIndex=0;else el.value='';});
+}
+
+function subscribeNewsletter(){
+    var e=document.getElementById('newsletterEmail').value.trim();
+    if(!e||!e.includes('@')){showToast('Please enter a valid email address.');return;}
+    showToast('Subscribed successfully! Thank you.');
+    document.getElementById('newsletterEmail').value='';
+}
+
+updateZIndex();updateUI();
+</script>
+</body>
+</html>
