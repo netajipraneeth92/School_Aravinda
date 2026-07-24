@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
         :root{--navy-deep:#0c1e33;--navy-dark:#152d4a;--navy:#1b3a5c;--navy-medium:#2a5580;--navy-light:#4a7aad;--navy-pale:#cddcef;--navy-faint:#e8f0f8;--gold:#b8941a;--gold-light:#d4b03a;--gold-dim:rgba(184,148,26,0.35);--cream:#fffef8;--cream-warm:#faf7ef;--cream-mid:#f3ebd8;--cream-darker:#e8dbc0;--text-dark:#152d4a;--text-body:#2c4a6a;--text-muted:#5a7a9a}
@@ -135,6 +137,10 @@
         .page-number{position:absolute;bottom:8px;right:18px;font-family:'Playfair Display',serif;font-size:10px;color:rgba(27,58,92,0.18);font-style:italic}
         .map-embed{width:100%;height:130px;border-radius:8px;margin:8px 0;border:1px solid rgba(27,58,92,0.1);overflow:hidden;background:var(--navy-faint)}
         .map-embed iframe{width:100%;height:100%;border:0;display:block}
+        .album-chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+        .album-chip{border:1.5px solid var(--gold,#b8974a);background:transparent;color:var(--navy-faint,#1b3a5c);border-radius:20px;padding:5px 13px;font-size:10.5px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+        .album-chip.active,.album-chip:hover{background:var(--gold,#b8974a);color:#fff}
+        .gallery-status{grid-column:1/-1;text-align:center;font-size:11.5px;color:#8a7a5c;padding:20px 0}
         .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0}
         .gallery-item{position:relative;border-radius:6px;overflow:hidden;background:var(--navy-faint);cursor:pointer;transition:transform .25s,box-shadow .25s;aspect-ratio:4/3}
         .gallery-item:hover{transform:scale(1.02);box-shadow:0 4px 16px rgba(27,58,92,0.15)}
@@ -318,23 +324,9 @@
                     <div class="page-content">
                         <div class="page-header"><h2>Gallery</h2><div class="header-line"></div><div class="page-subtitle">Glimpses of School Life</div></div>
                         <p class="page-text">Moments that capture the spirit, culture, and vibrancy of Aravinda High School.</p>
-                        <div class="gallery-grid">
-                            <div class="gallery-item" onclick="openLightbox(0)">
-                                <img src="https://z-cdn-media.chatglm.cn/files/8ae4de52-109e-4f19-924e-9b8c18cff8eb.png?auth_key=1884650796-5623ebff40df4f5eba0edaf1670f2012-0-06d8bf63356a8312f96adbcb03771912" alt="Human Pyramid" loading="lazy">
-                                <div class="gallery-caption"><strong>Human Pyramid Formation</strong>Students performing with the Tricolour</div>
-                            </div>
-                            <div class="gallery-item" onclick="openLightbox(1)">
-                                <img src="https://z-cdn-media.chatglm.cn/files/39bcd7b7-e802-4d05-bf0b-7f8faacbc881.png?auth_key=1884650796-42714d1cb92f4fd5bff14c2fa078ec2d-0-662a94b9f30904deac0cd34fb40828ef" alt="Srujanotsavam" loading="lazy">
-                                <div class="gallery-caption"><strong>Aravinda Srujanotsavam</strong>Annual cultural festival</div>
-                            </div>
-                            <div class="gallery-item" onclick="openLightbox(2)">
-                                <img src="https://z-cdn-media.chatglm.cn/files/05732402-a06d-4b48-8680-63f01239a948.png?auth_key=1884650796-e1f6403423434a3f80530d59956e80b0-0-74ec93841106c8ba69c69014dc2cecc0" alt="Folk Dance" loading="lazy">
-                                <div class="gallery-caption"><strong>Traditional Folk Dance</strong>Vibrant circle dance performance</div>
-                            </div>
-                            <div class="gallery-item" onclick="openLightbox(3)">
-                                <img src="https://z-cdn-media.chatglm.cn/files/eb505dc3-5404-40e9-883a-a0d09cfd1710.png?auth_key=1884650796-08fd5d9a8556406c82a1c31bb02e62c2-0-bb57242fdd8d167c4003fa0583859b06" alt="Art Exhibition" loading="lazy">
-                                <div class="gallery-caption"><strong>Art &amp; Craft Exhibition</strong>Colourful handmade creations</div>
-                            </div>
+                        <div class="album-chips" id="albumChips"></div>
+                        <div class="gallery-grid" id="galleryGrid">
+                            <p class="gallery-status" id="galleryStatus">Loading photos…</p>
                         </div>
                         <div class="page-curl" data-next="5"></div>
                     </div>
@@ -691,18 +683,103 @@ document.addEventListener('keydown',function(e){
     if(e.key==='ArrowLeft'||e.key==='ArrowUp')prevPage();
 });
 
-var galleryData=[
-    {src:'https://z-cdn-media.chatglm.cn/files/8ae4de52-109e-4f19-924e-9b8c18cff8eb.png?auth_key=1884650796-5623ebff40df4f5eba0edaf1670f2012-0-06d8bf63356a8312f96adbcb03771912',caption:'Human Pyramid Formation — Students performing the grand pyramid with the Tricolour'},
-    {src:'https://z-cdn-media.chatglm.cn/files/39bcd7b7-e802-4d05-bf0b-7f8faacbc881.png?auth_key=1884650796-42714d1cb92f4fd5bff14c2fa078ec2d-0-662a94b9f30904deac0cd34fb40828ef',caption:'Aravinda Srujanotsavam — Annual cultural festival stage performance'},
-    {src:'https://z-cdn-media.chatglm.cn/files/05732402-a06d-4b48-8680-63f01239a948.png?auth_key=1884650796-e1f6403423434a3f80530d59956e80b0-0-74ec93841106c8ba69c69014dc2cecc0',caption:'Traditional Folk Dance — Students in vibrant attire performing a circle dance'},
-    {src:'https://z-cdn-media.chatglm.cn/files/eb505dc3-5404-40e9-883a-a0d09cfd1710.png?auth_key=1884650796-08fd5d9a8556406c82a1c31bb02e62c2-0-bb57242fdd8d167c4003fa0583859b06',caption:'Art & Craft Exhibition — Colourful handmade creations on display'}
-];
+/* =========================================================
+   GALLERY — driven by a published Google Sheet (no coding
+   needed to add photos/albums later).
+
+   1) Paste photos into repo folders: gallery/Album1/, gallery/Album2/ ...
+   2) In your Google Sheet, add one row per photo with columns:
+      Album | Caption | ImageFile | Order
+      ImageFile = the path from the repo root, e.g. gallery/Album1/photo1.jpg
+   3) File -> Share -> Publish to web -> choose the sheet -> CSV -> Publish
+   4) Paste that link below as SHEET_CSV_URL.
+   ========================================================= */
+var SHEET_CSV_URL = "PASTE_YOUR_PUBLISHED_CSV_LINK_HERE";
+
+var galleryData=[];      // photos currently shown in the grid (after album filter)
+var allPhotos=[];        // every photo from the sheet, unfiltered
 var currentLightbox=0;
+var activeAlbum='All';
+
+function resolveImagePath(p){
+    if(!p) return '';
+    p=p.trim();
+    if(/^https?:\/\//i.test(p)) return p;      // already a full URL
+    return p.replace(/^\/+/,'');               // treat as repo-relative path
+}
+
+function loadGallery(){
+    var statusEl=document.getElementById('galleryStatus');
+    if(!SHEET_CSV_URL||SHEET_CSV_URL.indexOf('PASTE_YOUR')===0){
+        if(statusEl) statusEl.textContent='Gallery not connected yet — add your Google Sheet link in the code (SHEET_CSV_URL).';
+        return;
+    }
+    Papa.parse(SHEET_CSV_URL,{
+        download:true,
+        header:true,
+        skipEmptyLines:true,
+        complete:function(results){
+            allPhotos=results.data.map(function(row){
+                return {
+                    album:(row.Album||'General').trim(),
+                    caption:(row.Caption||'').trim(),
+                    src:resolveImagePath(row.ImageFile||row.ImageURL||''),
+                    order:parseFloat(row.Order)||0
+                };
+            }).filter(function(p){return p.src;});
+            allPhotos.sort(function(a,b){return a.order-b.order;});
+            buildAlbumChips();
+            renderGallery('All');
+        },
+        error:function(){
+            if(statusEl) statusEl.textContent='Could not load photos right now — check back shortly.';
+        }
+    });
+}
+
+function buildAlbumChips(){
+    var chipsEl=document.getElementById('albumChips');
+    if(!chipsEl) return;
+    var albums=['All'];
+    allPhotos.forEach(function(p){ if(albums.indexOf(p.album)===-1) albums.push(p.album); });
+    chipsEl.innerHTML='';
+    albums.forEach(function(name){
+        var btn=document.createElement('button');
+        btn.className='album-chip'+(name===activeAlbum?' active':'');
+        btn.type='button';
+        btn.textContent=name;
+        btn.onclick=function(){ renderGallery(name); };
+        chipsEl.appendChild(btn);
+    });
+}
+
+function renderGallery(albumName){
+    activeAlbum=albumName;
+    document.querySelectorAll('.album-chip').forEach(function(c){
+        c.classList.toggle('active',c.textContent===albumName);
+    });
+    galleryData=albumName==='All'?allPhotos:allPhotos.filter(function(p){return p.album===albumName;});
+    var grid=document.getElementById('galleryGrid');
+    if(!grid) return;
+    if(galleryData.length===0){
+        grid.innerHTML='<p class="gallery-status">No photos in this album yet.</p>';
+        return;
+    }
+    grid.innerHTML=galleryData.map(function(p,i){
+        return '<div class="gallery-item" onclick="openLightbox('+i+')">'+
+               '<img src="'+p.src+'" alt="'+(p.caption||p.album)+'" loading="lazy">'+
+               '<div class="gallery-caption"><strong>'+p.album+'</strong>'+p.caption+'</div>'+
+               '</div>';
+    }).join('');
+}
+
 function openLightbox(idx){currentLightbox=idx;updateLightbox();document.getElementById('lightbox').classList.add('active');}
 function closeLightbox(){document.getElementById('lightbox').classList.remove('active');}
 function lightboxNav(dir){currentLightbox=(currentLightbox+dir+galleryData.length)%galleryData.length;updateLightbox();}
 function updateLightbox(){document.getElementById('lightboxImg').src=galleryData[currentLightbox].src;document.getElementById('lightboxCaption').textContent=galleryData[currentLightbox].caption;}
 document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===document.getElementById('lightbox'))closeLightbox();});
+
+loadGallery();
 
 var toastTimer;
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show');},2500);}
